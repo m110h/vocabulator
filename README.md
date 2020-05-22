@@ -1,7 +1,7 @@
 # Vocabulator
 It's a simple game with words written on C++ and SFML2
 
-## External
+## Third Party
 Vocabulator uses external projects enumerated below:
 1. https://github.com/SFML/SFML
 2. https://github.com/effolkronium/random
