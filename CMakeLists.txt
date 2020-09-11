@@ -1,12 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-# Check a platform
-if(WIN32)
-	message("Platform: WIN32")
-else()
-	message("Unsupported platform yet")
-	return()
-endif()
+project(vocabulator VERSION 1.0 LANGUAGES CXX)
 
 # Set a default build type if none was specified by option -DCMAKE_BUILD_TYPE=Release
 set(default_build_type "Release")
@@ -23,11 +17,18 @@ else()
 	message("Configuration: ${CMAKE_BUILD_TYPE}")
 endif()
 
-project(vocabulator VERSION 1.0 LANGUAGES CXX)
+# Check a platform
+if(WIN32)
+	message("Platform: WIN32")
+else()
+	message("Unsupported platform yet")
+	return()
+endif()
 
-set(sources abstractstate.cpp finalscreenstate.cpp gamecontext.cpp gameobjects.cpp gamesettings.cpp gamestate.cpp gamestatistics.cpp main.cpp menustate.cpp resources.cpp splashstate.cpp statisticsstate.cpp)
+file(GLOB SOURCES_LIST "*.cpp" "*.h")
+#set(sources abstractstate.cpp finalscreenstate.cpp gamecontext.cpp gameobjects.cpp gamesettings.cpp gamestate.cpp gamestatistics.cpp main.cpp menustate.cpp resources.cpp splashstate.cpp statisticsstate.cpp)
 
-add_executable(vocabulator ${sources})
+add_executable(vocabulator ${SOURCES_LIST})
 
 # Define libconfig root directory
 set(libconfigdir "d:/Development/Projects/words-trainer/lib/libconfig")
