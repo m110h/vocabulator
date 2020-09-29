@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(vocabulator VERSION 1.0 LANGUAGES CXX)
+set(PROJECT vocabulator)
+
+project(${PROJECT} VERSION 1.0 LANGUAGES CXX)
+
+option(OPTIMIZE "Allow compiler optimizations. Set to OFF to disable" OFF)
 
 # Set a default build type if none was specified by option -DCMAKE_BUILD_TYPE=Release
 set(default_build_type "Release")
@@ -25,34 +29,54 @@ else()
 	return()
 endif()
 
-file(GLOB SOURCES_LIST "*.cpp" "*.h")
-#set(sources abstractstate.cpp finalscreenstate.cpp gamecontext.cpp gameobjects.cpp gamesettings.cpp gamestate.cpp gamestatistics.cpp main.cpp menustate.cpp resources.cpp splashstate.cpp statisticsstate.cpp)
+#add_subdirectory(thirdparty/sfml)
 
-add_executable(vocabulator ${SOURCES_LIST})
+#set(BUILD_EXAMPLES ON CACHE BOOL "Disable examples for libconfig")
+#set(BUILD_SHARED_LIBS OFF CACHE BOOL "Disable shared libraries for libconfig")
+#set(BUILD_TESTS OFF CACHE BOOL "Disable tests for libconfig")
+#add_subdirectory(thirdparty/libconfig)
 
-# Define libconfig root directory
-set(libconfigdir "d:/Development/Projects/words-trainer/lib/libconfig")
+#set(PLOG_BUILD_SAMPLES OFF CACHE BOOL "Disable samples for plog")
+#add_subdirectory(thirdparty/plog)
 
-# Define libs
-set(sfmllibs sfml-main sfml-system sfml-window sfml-graphics sfml-audio)
-set(configlib config++.dll)
+file(GLOB SOURCES_LIST "*.cpp" "*.hpp")
+
+add_executable(${PROJECT} ${SOURCES_LIST})
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-	target_link_options(vocabulator PRIVATE -mwindows)
+	target_link_options(${PROJECT} PRIVATE -mwindows)
 elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
-	target_link_options(vocabulator PRIVATE -s -mwindows)
+	target_link_options(${PROJECT} PRIVATE -s -mwindows)
+	# Disable optimizations
+	if(NOT OPTIMIZE)
+		string(REGEX REPLACE "(\-O[011123456789])" "" CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS}")
+		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -O0")
+		message("Optimizations were disabled")
+	endif()
 else()
 	message("Unknown configuration name ${CMAKE_BUILD_TYPE}. Stop")
 	return()
 endif()
 
 # Enable c++17
-target_compile_features(vocabulator PRIVATE cxx_std_17)
+target_compile_features(${PROJECT} PRIVATE cxx_std_17)
 
 # Additional directories that contain header files
-target_include_directories(vocabulator PRIVATE ${libconfigdir}/include)
+target_include_directories(${PROJECT} PRIVATE
+	${CMAKE_BINARY_DIR}/include
+	${CMAKE_BINARY_DIR}/include/random
+	${CMAKE_BINARY_DIR}/include/libconfig
+	)
 
 # Additional directories that contain libraries
-target_link_directories(vocabulator PRIVATE ${libconfigdir}/lib)
+target_link_directories(${PROJECT} PRIVATE
+	${CMAKE_BINARY_DIR}/lib/sfml
+	${CMAKE_BINARY_DIR}/lib/libconfig
+#	${CMAKE_SOURCE_DIR}/out
+#	${CMAKE_SOURCE_DIR}/thirdparty/sfml/lib
+	)
 
-target_link_libraries(vocabulator ${sfmllibs} ${configlib})
+# Define libs
+set(sfmllibs sfml-main sfml-system sfml-window sfml-graphics sfml-audio)
+
+target_link_libraries(${PROJECT} config++ ${sfmllibs})
