@@ -1,5 +1,5 @@
 # Vocabulator
-It's a simple game with words written on C++ and SFML2
+It's a simple game with words that helps to improve your vocabulary.
 
 ## Third Party
 Vocabulator uses external projects enumerated below:
