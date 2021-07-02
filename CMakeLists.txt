@@ -39,8 +39,8 @@ set(BUILD_SHARED_LIBS FALSE CACHE BOOL "Disable shared libraries for SFML" FORCE
 set(SFML_BUILD_NETWORK FALSE CACHE BOOL "Disable networking module for SFML" FORCE)
 ADD_SUBDIRECTORY(thirdparty/sfml)
 
-set(BUILD_EXAMPLES OFF CACHE BOOL "Disable examples for libconfig" FORCE)
-set(BUILD_TESTS OFF CACHE BOOL "Disable tests for libconfig" FORCE)
+#set(BUILD_EXAMPLES OFF CACHE BOOL "Disable examples for libconfig" FORCE)
+#set(BUILD_TESTS OFF CACHE BOOL "Disable tests for libconfig" FORCE)
 ADD_SUBDIRECTORY(thirdparty/libconfig)
 
 set(PLOG_BUILD_SAMPLES OFF CACHE BOOL "Disable samples for plog" FORCE)
