@@ -86,7 +86,7 @@ void Menu::reset() {
 void Menu::update(float delta) {}
 
 void Menu::draw(sf::RenderWindow* window) {
-    window->clear(sf::Color(0, 0, 0));
+    window->clear(sf::Color(0, 26, 35));
 
     sf::Text* text = Resources::getInstance().getGameText();
 

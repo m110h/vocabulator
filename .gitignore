@@ -34,3 +34,7 @@
 build/
 build-codeblocks/
 tmp/
+lib/
+bin/vocabulator
+bin/log.txt
+

@@ -44,7 +44,7 @@ void Splash::draw(sf::RenderWindow* window) {
     c.a = sf::Uint8(255.f * std::abs(std::sin(timer)));
     text->setFillColor(c);
 
-    window->clear(sf::Color(0, 0, 0));
+    window->clear(sf::Color(0, 26, 35));
     window->draw(*text);
 }
 

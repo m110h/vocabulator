@@ -22,7 +22,7 @@ void StatisticsState::draw(sf::RenderWindow* window) {
 
     sf::FloatRect box;
 
-    window->clear(sf::Color(0, 0, 0));
+    window->clear(sf::Color(0, 26, 35));
 
     text->setCharacterSize(28);
 

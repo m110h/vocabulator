@@ -37,7 +37,7 @@ void FinalScreen::draw(sf::RenderWindow* window) {
 
     text->setPosition(sf::Vector2f(window->getSize().x/2, window->getSize().y/2 - 100));
 
-    window->clear(sf::Color(0, 0, 0));
+    window->clear(sf::Color(0, 26, 35));
     window->draw(*text);
 }
 
