@@ -27,5 +27,7 @@ int main(int argc, char* argv[])
 
     delete thegame;
 
+    PLOG_DEBUG << "STOP LOGGING";
+
     return EXIT_SUCCESS;
 }
