@@ -7,3 +7,6 @@
 [submodule "thirdparty/plog"]
 	path = thirdparty/plog
 	url = https://github.com/SergiusTheBest/plog.git
+[submodule "thirdparty/libconfig"]
+	path = thirdparty/libconfig
+	url = https://github.com/m110h/libconfig.git
