@@ -9,4 +9,4 @@ Vocabulator uses external projects enumerated below:
 4. https://github.com/hyperrealm/libconfig
 
 ## Screenshot
-![Image description](screenshots/game_view.jpg)
+![Image description](screenshots/main_menu.jpg)
