@@ -4,7 +4,17 @@ set(PROJECT vocabulator)
 
 project(${PROJECT} VERSION 1.0 LANGUAGES CXX)
 
-option(OPTIMIZE "Allow compiler optimizations. Set to OFF to disable" OFF)
+# Check a platform
+#if(WIN32)
+#	message("Platform: WIN32")
+#else()
+#	message("Unsupported platform yet")
+#	return()
+#endif()
+
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+#option(OPTIMIZE "Allow compiler optimizations. Set to OFF to disable" OFF)
 
 # Set a default build type if none was specified by option -DCMAKE_BUILD_TYPE=Release
 set(default_build_type "Release")
@@ -21,62 +31,56 @@ else()
 	message("Configuration: ${CMAKE_BUILD_TYPE}")
 endif()
 
-# Check a platform
-if(WIN32)
-	message("Platform: WIN32")
-else()
-	message("Unsupported platform yet")
-	return()
-endif()
+set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/lib)
+set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/lib)
+set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_HOME_DIRECTORY}/bin)
 
-#add_subdirectory(thirdparty/sfml)
+set(BUILD_SHARED_LIBS FALSE CACHE BOOL "Disable shared libraries for SFML" FORCE)
+set(SFML_BUILD_NETWORK FALSE CACHE BOOL "Disable networking module for SFML" FORCE)
+ADD_SUBDIRECTORY(thirdparty/sfml)
 
-#set(BUILD_EXAMPLES ON CACHE BOOL "Disable examples for libconfig")
-#set(BUILD_SHARED_LIBS OFF CACHE BOOL "Disable shared libraries for libconfig")
-#set(BUILD_TESTS OFF CACHE BOOL "Disable tests for libconfig")
-#add_subdirectory(thirdparty/libconfig)
+set(BUILD_EXAMPLES OFF CACHE BOOL "Disable examples for libconfig" FORCE)
+set(BUILD_TESTS OFF CACHE BOOL "Disable tests for libconfig" FORCE)
+ADD_SUBDIRECTORY(thirdparty/libconfig)
 
-#set(PLOG_BUILD_SAMPLES OFF CACHE BOOL "Disable samples for plog")
-#add_subdirectory(thirdparty/plog)
+set(PLOG_BUILD_SAMPLES OFF CACHE BOOL "Disable samples for plog" FORCE)
+ADD_SUBDIRECTORY(thirdparty/plog)
 
 file(GLOB SOURCES_LIST "*.cpp" "*.hpp")
 
 add_executable(${PROJECT} ${SOURCES_LIST})
 
-if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-	target_link_options(${PROJECT} PRIVATE -mwindows)
-elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
-	target_link_options(${PROJECT} PRIVATE -s -mwindows)
+#if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+#	target_link_options(${PROJECT} PRIVATE -mwindows)
+#elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
+#	target_link_options(${PROJECT} PRIVATE -s -mwindows)
 	# Disable optimizations
-	if(NOT OPTIMIZE)
-		string(REGEX REPLACE "(\-O[011123456789])" "" CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS}")
-		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -O0")
-		message("Optimizations were disabled")
-	endif()
-else()
-	message("Unknown configuration name ${CMAKE_BUILD_TYPE}. Stop")
-	return()
-endif()
+#	if(NOT OPTIMIZE)
+#		string(REGEX REPLACE "(\-O[011123456789])" "" CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS}")
+#		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -O0")
+#		message("Optimizations were disabled")
+#	endif()
+#else()
+#	message("Unknown configuration name ${CMAKE_BUILD_TYPE}. Stop")
+#	return()
+#endif()
 
 # Enable c++17
 target_compile_features(${PROJECT} PRIVATE cxx_std_17)
 
 # Additional directories that contain header files
 target_include_directories(${PROJECT} PRIVATE
-	${CMAKE_BINARY_DIR}/include
-	${CMAKE_BINARY_DIR}/include/random
-	${CMAKE_BINARY_DIR}/include/libconfig
+	${CMAKE_HOME_DIRECTORY}/thirdparty/random/include
+	${CMAKE_HOME_DIRECTORY}/thirdparty/plog/include
+	${CMAKE_HOME_DIRECTORY}/thirdparty/sfml/include
+	${CMAKE_HOME_DIRECTORY}/thirdparty/libconfig/lib
 	)
 
-# Additional directories that contain libraries
-target_link_directories(${PROJECT} PRIVATE
-	${CMAKE_BINARY_DIR}/lib/sfml
-	${CMAKE_BINARY_DIR}/lib/libconfig
-#	${CMAKE_SOURCE_DIR}/out
-#	${CMAKE_SOURCE_DIR}/thirdparty/sfml/lib
-	)
+if(WIN32)
+    set(THIRD_PARTY_LIBS sfml-main sfml-system sfml-window sfml-graphics sfml-audio config++)
+else()
+    set(THIRD_PARTY_LIBS sfml-system sfml-window sfml-graphics sfml-audio config++)
+endif()
 
-# Define libs
-set(sfmllibs sfml-main sfml-system sfml-window sfml-graphics sfml-audio)
+target_link_libraries(${PROJECT} ${THIRD_PARTY_LIBS})
 
-target_link_libraries(${PROJECT} config++ ${sfmllibs})

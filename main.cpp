@@ -9,7 +9,7 @@
 
 int main(int argc, char* argv[])
 {
-    plog::init(plog::debug, "log.txt");
+    //plog::init(plog::debug, "log.txt");
 
     PLOG_DEBUG << "START LOGGING";
 
