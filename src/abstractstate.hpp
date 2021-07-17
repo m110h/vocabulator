@@ -26,6 +26,7 @@ protected:
 protected:
     Context* context;
     sf::String name;
+    sf::Color bg;
 };
 
 class Context

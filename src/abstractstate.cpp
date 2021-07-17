@@ -1,6 +1,6 @@
 #include "abstractstate.hpp"
 
-State::State(): context(nullptr), name("") {}
+State::State(): context(nullptr), name(""), bg(0, 26, 35) {}
 
 State::~State() {}
 

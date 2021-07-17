@@ -264,7 +264,7 @@ void Game::update(float delta) {
 }
 
 void Game::draw(sf::RenderWindow* window) {
-    window->clear(sf::Color(0, 26, 35));
+    window->clear(bg);
 
     if (game) {
         game->draw(window);
