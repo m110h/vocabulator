@@ -8,5 +8,14 @@ Vocabulator uses external projects enumerated below:
 3. https://github.com/SergiusTheBest/plog
 4. https://github.com/hyperrealm/libconfig
 
+## How to build
+1. git clone --recurse-submodules https://github.com/m110h/vocabulator.git
+2. cd vocabulator
+3. mkdir build
+4. cd build
+5. cmake ..
+6. make
+An output executable file will be placed in vocabulator/bin directory.
+
 ## Screenshot
 ![Image description](screenshots/main_menu.jpg)
