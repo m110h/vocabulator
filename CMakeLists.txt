@@ -46,7 +46,7 @@ ADD_SUBDIRECTORY(thirdparty/libconfig)
 set(PLOG_BUILD_SAMPLES OFF CACHE BOOL "Disable samples for plog" FORCE)
 ADD_SUBDIRECTORY(thirdparty/plog)
 
-file(GLOB SOURCES_LIST "*.cpp" "*.hpp")
+file(GLOB SOURCES_LIST "src/*.cpp" "src/*.hpp")
 
 add_executable(${PROJECT} ${SOURCES_LIST})
 
