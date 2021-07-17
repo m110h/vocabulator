@@ -15,6 +15,7 @@ Vocabulator uses external projects enumerated below:
 4. cd build
 5. cmake ..
 6. make
+
 An output executable file will be placed in vocabulator/bin directory.
 
 ## Screenshot
