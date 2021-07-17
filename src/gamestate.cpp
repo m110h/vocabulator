@@ -37,7 +37,7 @@ void VariantGame::loadDescriptions(const sf::String& dictionary) {
         const libconfig::Setting &word = words[i];
         std::string w, t, tr;
 
-        if(!(word.lookupValue("word", w) && word.lookupValue("type", t) && word.lookupValue("translate", tr)))
+        if(!(word.lookupValue("word", w) && word.lookupValue("type", t) && word.lookupValue("translation", tr)))
            continue;
 
         std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
