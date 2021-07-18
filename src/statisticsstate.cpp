@@ -7,11 +7,9 @@ StatisticsState::StatisticsState() {
     setName("statistics");
 }
 
-void StatisticsState::reset() {
-}
+void StatisticsState::reset() {}
 
-StatisticsState::~StatisticsState() {
-}
+StatisticsState::~StatisticsState() {}
 
 void StatisticsState::update(float delta) {
 }

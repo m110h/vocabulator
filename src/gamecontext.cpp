@@ -4,8 +4,7 @@
 
 #include <cassert>
 
-GameContext::GameContext(): Context(), currentState(nullptr), window(nullptr)
-{
+GameContext::GameContext(): Context(), currentState(nullptr), window(nullptr) {
     PLOG_DEBUG << "GameContext constructor";
 
     window = new sf::RenderWindow(sf::VideoMode(800, 600, 32), "VOCABULATOR", sf::Style::Titlebar | sf::Style::Close);
@@ -41,6 +40,8 @@ void GameContext::run()
     PLOG_DEBUG << "start main loop";
 
     float deltaTime = 0.f;
+    float fps = 30.f;
+
     while (window->isOpen()) {
         assert(currentState && "logical error: current state is null");
 
@@ -55,14 +56,16 @@ void GameContext::run()
         }
 
         deltaTime += clock.restart().asSeconds();
-        if (deltaTime < (1.f/60.f))
+        if (deltaTime < (1.f/fps)) {
             continue;
+        }
 
         currentState->update(deltaTime);
         deltaTime = 0.f;
 
-        if (!window->isOpen())
+        if (!window->isOpen()) {
             break;
+        }
 
         currentState->draw(window);
 
